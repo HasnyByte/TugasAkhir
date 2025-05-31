@@ -20,7 +20,7 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan lokal A
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/username/grocery.git
+git clone https://github.com/HasnyByte/TugasAkhir.git
 cd grocery
 ```
 
