@@ -5,14 +5,14 @@
     <div class="container mx-auto px-8 flex items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center">
-            <img src="{{ asset('images/logo.png') }}" class="h-10 mr-2 alt="Logo">
+            <img src="{{ asset('images/logo.png') }}" class="h-6 mr-1 alt="Logo">
             <div class="ml-2 text-xl font-bold">Grocery</div>
         </div>
 
         <!-- Navigasi + Search + Cart + Profile -->
         <div class="flex items-center space-x-10">
             <!-- Navigasi -->
-            <div class="hidden md:flex space-x-10">
+            <div class="hidden md:flex space-x-7">
                 <a href="{{route('pages.home')}}" class="text-[#777E90] font-medium hover:text-[#2A933C]">Home</a>
                 <a href="{{route('pages.shop')}}" class="text-[#777E90] font-medium hover:text-[#2A933C]">Shop</a>
                 <a href="{{route('pages.contactus')}}" class="text-[#777E90] font-medium hover:text-[#2A933C]">Contact Us</a>
