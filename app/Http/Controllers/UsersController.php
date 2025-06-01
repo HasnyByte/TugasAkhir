@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-
+use App\Models\Product;
+use App\Models\Category;
 class UsersController extends Controller
 {
     // Middleware auth hanya untuk logout dan get users
@@ -92,4 +93,8 @@ class UsersController extends Controller
             'data' => $users
         ], 200);
     }
+
+   
+    
+
 }

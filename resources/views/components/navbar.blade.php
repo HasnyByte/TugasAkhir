@@ -5,19 +5,36 @@
     <div class="container mx-auto px-8 flex items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center">
-            <img src="{{ asset('images/') }}" class="h-auto" alt="Logo">
-            <div class="ml-2 text-xl font-bold">
-                Grocery
-            </div>
+            <img src="{{ asset('images/logo.png') }}" class="h-10 mr-2 alt="Logo">
+            <div class="ml-2 text-xl font-bold">Grocery</div>
         </div>
 
-        <!-- Navigasi -->
-        <div class="flex items-center space-x-24">
-            <div class="hidden md:flex space-x-14">
+        <!-- Navigasi + Search + Cart + Profile -->
+        <div class="flex items-center space-x-10">
+            <!-- Navigasi -->
+            <div class="hidden md:flex space-x-10">
                 <a href="{{route('pages.home')}}" class="text-[#777E90] font-medium hover:text-[#2A933C]">Home</a>
                 <a href="{{route('pages.shop')}}" class="text-[#777E90] font-medium hover:text-[#2A933C]">Shop</a>
                 <a href="{{route('pages.contactus')}}" class="text-[#777E90] font-medium hover:text-[#2A933C]">Contact Us</a>
             </div>
+
+            <!-- Search Bar -->
+            <div class="relative hidden md:block">
+                <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#2A933C] focus:border-transparent text-sm text-gray-700" />
+                <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+            </div>
+
+            <!-- Cart Icon -->
+            <div class="relative">
+            <a href="{{ route('pages.cart') }}" class="relative bg-white rounded-full p-2 hover:bg-gray-100 transition duration-150 ease-in-out" aria-label="Open cart">
+                 <button 
+                class="relative bg-white rounded-full p-2 hover:bg-gray-100 transition duration-150 ease-in-out"
+                aria-label="Open cart">
+                <i class="fas fa-shopping-cart text-gray-500 text-xl"></i>
+            </button>
+            </a>
+        </div>
+
 
             <!-- Ikon Profil + Popup Logout -->
             <div class="relative">
@@ -43,7 +60,7 @@
 <div class="mt-20"></div>
 
 <!-- Modal Konfirmasi Logout -->
-<div id="confirmLogoutModal" class="fixed inset-0 flex items-center justify-center bg-gradient-to-b from-black/20 via-black/30 to-black/20 hidden z-50">
+<div id="confirmLogoutModal" class="fixed inset-0 flex-4px items-center justify-center bg-gradient-to-b from-black/20 via-black/30 to-black/20 hidden z-50">
     <div class="bg-white rounded-lg p-6 w-[90%] max-w-sm shadow-xl text-center">
         <p class="text-lg text-gray-800 mb-4">Apakah Anda yakin ingin logout?</p>
         <div class="flex justify-center space-x-4">
@@ -52,7 +69,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Script: Toggle popup & konfirmasi logout -->
 <script>
@@ -64,13 +80,11 @@
         const confirmYes = document.getElementById('confirmLogoutYes');
         const confirmCancel = document.getElementById('confirmLogoutCancel');
 
-        // Toggle popup profil
         profileButton?.addEventListener('click', function (event) {
             event.stopPropagation();
             logoutPopup.classList.toggle('hidden');
         });
 
-        // Tutup popup saat klik di luar
         window.addEventListener('click', function () {
             logoutPopup.classList.add('hidden');
         });
@@ -79,21 +93,17 @@
             event.stopPropagation();
         });
 
-        // Klik logout → tampilkan modal konfirmasi
         logoutConfirmBtn?.addEventListener('click', function () {
             confirmModal.classList.remove('hidden');
             logoutPopup.classList.add('hidden');
         });
 
-        // Klik batal → sembunyikan modal
         confirmCancel?.addEventListener('click', function () {
             confirmModal.classList.add('hidden');
         });
 
-        // Klik ya → aksi logout (kosong, bisa diarahkan nanti)
         confirmYes?.addEventListener('click', function () {
             confirmModal.classList.add('hidden');
-            // Contoh: arahkan ke logout route nanti
             // window.location.href = "/logout";
         });
     });
