@@ -1,4 +1,5 @@
-<!doctype html>
+
+    <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,15 +19,28 @@
 
     <div class="w-full md:w-1/2 h-screen p-8 md:p-12 flex flex-col justify-center bg-white relative">
         <div class="max-w-md mx-auto w-full">
-            <h2 class="text-5xl font-bold text-gray-800 mb-12">Welcome<br />Back</h2>
+            <h2 class="text-5xl font-bold text-gray-800 mb-12">Create<br />Account</h2>
 
+            <!-- Display Errors -->
+            @if($errors->any())
+                <div class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
+                    <ul class="list-disc list-inside">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <!-- Display Success Message -->
             @if(session('success'))
+                <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-md">
+                    {{ session('success') }}
+                </div>
                 <script>
-                    window.onload = function () {
-                        if (confirm("{{ session('success') }}")) {
-                            window.location.href = "{{ route('login') }}";
-                        }
-                    }
+                    setTimeout(function() {
+                        window.location.href = "{{ route('login') }}";
+                    }, 2000);
                 </script>
             @endif
 
@@ -36,25 +50,36 @@
                 <div class="mb-6">
                     <label for="nama_user" class="block text-gray-700 mb-2">Nama</label>
                     <input type="text" name="nama_user" id="nama_user" autocomplete="name"
+                           value="{{ old('nama_user') }}"
                            placeholder="Enter your name"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 @error('nama_user') border-red-500 @enderror"
                            required />
+                    @error('nama_user')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-6">
                     <label for="email_user" class="block text-gray-700 mb-2">Email</label>
                     <input type="email" name="email_user" id="email_user" autocomplete="email"
+                           value="{{ old('email_user') }}"
                            placeholder="Enter your email"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 @error('email_user') border-red-500 @enderror"
                            required />
+                    @error('email_user')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-6">
                     <label for="password_user" class="block text-gray-700 mb-2">Password</label>
                     <input type="password" name="password_user" id="password_user" autocomplete="new-password"
                            placeholder="Enter your password"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 @error('password_user') border-red-500 @enderror"
                            required />
+                    @error('password_user')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-6">

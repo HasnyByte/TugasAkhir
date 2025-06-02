@@ -122,7 +122,7 @@
                     loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade">
             </iframe>
+            @include('components.footer')
         </div>
     </main>
-    @include('components.footer')
 @endsection

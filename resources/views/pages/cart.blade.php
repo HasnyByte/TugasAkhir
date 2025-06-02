@@ -1,258 +1,301 @@
 @extends('layouts.app')
 
 @section('content')
-@php
-    $total = collect($cart)->sum(fn($i) => $i['price'] * $i['quantity']);
-@endphp
+    @php
+        $total = collect($cart)->sum(fn($i) => $i['price'] * $i['quantity']);
+    @endphp
 
-<style>
-    body {
-        background-color: #fff;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    <style>
+        body {
+            background-color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    .shopping-cart-section {
-        padding: 3rem 0;
-    }
+        .shopping-cart-section {
+            padding: 3rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    .shopping-cart-title {
-        font-size: 2rem;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
+        .shopping-cart-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 1rem;
-    }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
 
-    .table thead th {
-        text-transform: uppercase;
-        font-size: 0.85rem;
-        background-color: #f8f8f8;
-        color: #999;
-        text-align: left;
-        padding: 1rem;
-        border-bottom: 1px solid #eee;
-    }
+        .table thead th {
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            background-color: #f8f8f8;
+            color: #999;
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
 
-    .table td {
-        padding: 1rem;
-        vertical-align: middle;
-        border-bottom: 1px solid #eee;
-    }
+        .table td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-bottom: 1px solid #eee;
+        }
 
-    .product-cell {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-    .product-cell img {
-        width: 80px;
-        height: 80px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
+        .product-cell img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
 
-    .quantity-controls {
-        display: inline-flex;
-        align-items: center;
-        border: 1px solid #eee;
-        border-radius: 25px;
-        overflow: hidden;
-    }
+        .quantity-controls {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #eee;
+            border-radius: 25px;
+            overflow: hidden;
+        }
 
-    .quantity-controls a {
-        width: 40px;
-        height: 40px;
-        font-size: 1.25rem;
-        background-color: #f9f9f9;
-        color: #444;
-        text-align: center;
-        line-height: 40px;
-        text-decoration: none;
-    }
+        .quantity-controls button {
+            width: 40px;
+            height: 40px;
+            font-size: 1.25rem;
+            background-color: #f9f9f9;
+            color: #444;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-    .quantity-controls input {
-        width: 50px;
-        height: 40px;
-        text-align: center;
-        border: none;
-        font-weight: 600;
-        background-color: #fff;
-    }
+        .quantity-controls button:hover {
+            background-color: #e9e9e9;
+            color: #222;
+        }
 
-    .remove-btn {
-        font-size: 1.5rem;
-        color: #bbb;
-        text-decoration: none;
-    }
+        .quantity-controls input {
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            border: none;
+            font-weight: 600;
+            background-color: #fff;
+        }
 
-    .remove-btn:hover {
-        color: #ff4d4d;
-    }
+        .remove-btn {
+            font-size: 1.5rem;
+            color: #bbb;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
 
-    .action-buttons {
-        display: flex;
-        justify-content: space-between;
-        margin: 2rem 0;
-    }
+        .remove-btn:hover {
+            color: #ff4d4d;
+        }
 
-    .btn-light {
-        background-color: #f5f5f5;
-        color: #333;
-        padding: 0.75rem 2rem;
-        border-radius: 25px;
-        font-weight: 600;
-        border: none;
-    }
+        .cart-total-box {
+            background-color: #fff;
+            padding: 2rem;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
 
-    .cart-total-box {
-        background-color: #fff;
-        padding: 2rem;
-        border: 1px solid #eee;
-        border-radius: 12px;
-    }
+        .cart-total-box h5 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
 
-    .cart-total-box h5 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-    }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
 
-    .summary-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-        font-size: 1rem;
-    }
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
 
-    .summary-row.total {
-        font-weight: bold;
-        font-size: 1.1rem;
-        border-top: 1px solid #eee;
-        padding-top: 1rem;
-        margin-top: 1rem;
-    }
+        .checkout-btn {
+            background-color: #00b300;
+            color: white;
+            padding: 0.75rem;
+            width: 100%;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-    .checkout-btn {
-        background-color: #00b300;
-        color: white;
-        padding: 0.75rem;
-        width: 100%;
-        border: none;
-        border-radius: 30px;
-        font-weight: 600;
-        margin-top: 1.5rem;
-        transition: background-color 0.3s ease;
-    }
+        .checkout-btn:hover {
+            background-color: #009900;
+        }
 
-    .checkout-btn:hover {
-        background-color: #009900;
-    }
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
 
-    .coupon-section {
-        margin-top: 2rem;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        border: 1px solid #eee;
-        padding: 1rem;
-        border-radius: 12px;
-    }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
 
-    .coupon-section input {
-        flex-grow: 1;
-        padding: 0.75rem 1rem;
-        border-radius: 30px;
-        border: 1px solid #ddd;
-    }
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
 
-    .coupon-section button {
-        padding: 0.75rem 1.5rem;
-        background-color: #222;
-        color: #fff;
-        border: none;
-        border-radius: 30px;
-        font-weight: 600;
-    }
-</style>
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .shopping-cart-section {
+                padding: 2rem 1rem;
+            }
 
-<div class="shopping-cart-section">
-    <div class="container">
-        <h2 class="shopping-cart-title">My Shopping Cart</h2>
+            .table {
+                font-size: 0.9rem;
+            }
 
-        <div class="row">
-            <div class="col-lg-8">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Subtotal</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($cart as $item)
-                            <tr>
-                                <td>
-                                    <div class="product-cell">
-                                        <img src="{{ asset('images/products/' . $item['image']) }}" alt="{{ $item['name'] ?? 'Product' }}">
-                                        <span>{{ $item['name'] ?? 'Unknown' }}</span>
-                                    </div>
-                                </td>
-                                <td>${{ number_format($item['price'], 2) }}</td>
-                                <td>
-                                    <div class="quantity-controls">
-                                        <a href="{{ route('cart.update', $item['id']) }}">−</a>
-                                        <input type="text" value="{{ $item['quantity'] }}" readonly>
-                                        <a href="{{ route('cart.remove', $item['id']) }}">+</a>
-                                    </div>
-                                </td>
-                                <td>${{ number_format($item['price'] * $item['quantity'], 2) }}</td>
-                                <td><a href="{{ route('cart.remove', $item['id']) }}" class="remove-btn">×</a></td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center text-muted">Your cart is empty.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+            .product-cell img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
 
-                <div class="coupon-section">
-                    <input type="text" placeholder="Enter code" disabled>
-                    <button disabled>Apply Coupon</button>
+    <div class="shopping-cart-section">
+        <div class="container">
+            <h2 class="shopping-cart-title">My Shopping Cart</h2>
+
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
                 </div>
-            </div>
+            @endif
 
-            <div class="col-lg-4">
-                <div class="cart-total-box">
-                    <h5>Cart Total</h5>
-                    <div class="summary-row">
-                        <span>Subtotal:</span>
-                        <span>${{ number_format($total, 2) }}</span>
+            @if(session('error'))
+                <div class="alert alert-error">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-12">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Subtotal</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse ($cart as $item)
+                                <tr>
+                                    <td>
+                                        <div class="product-cell">
+                                            <img src="{{ asset('images/products/' . $item['image']) }}" alt="{{ $item['name'] ?? 'Product' }}">
+                                            <span>{{ $item['name'] ?? 'Unknown' }}</span>
+                                        </div>
+                                    </td>
+                                    <td>Rp{{ number_format($item['price'], 0, ',', '.') }}</td>
+                                    <td>
+                                        <div class="quantity-controls">
+                                            <!-- Form untuk decrease quantity -->
+                                            <form action="{{ route('cart.decrease', $item['id']) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                <button type="submit" title="Decrease quantity">−</button>
+                                            </form>
+
+                                            <input type="text" value="{{ $item['quantity'] }}" readonly>
+
+                                            <!-- Form untuk increase quantity -->
+                                            <form action="{{ route('cart.increase', $item['id']) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                <button type="submit" title="Increase quantity">+</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td>Rp{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</td>
+                                    <td>
+                                        <!-- Form untuk remove item -->
+                                        <form action="{{ route('cart.remove', $item['id']) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="remove-btn"
+                                                    title="Remove item"
+                                                    onclick="return confirm('Are you sure you want to remove this item?')">×</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">Your cart is empty.</td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="summary-row">
-                        <span>Shipping:</span>
-                        <span style="color: #28a745;">Free</span>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <div class="cart-total-box">
+                        <h5>Cart Total</h5>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span>Rp{{ number_format($total, 0, ',', '.') }}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping:</span>
+                            <span style="color: #28a745;">Free</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span>Rp{{ number_format($total, 0, ',', '.') }}</span>
+                        </div>
+
+                        @if(!empty($cart))
+                            <form action="{{ route('cart.checkout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="checkout-btn" onclick="return confirm('Proceed with checkout?')">
+                                    Proceed to checkout
+                                </button>
+                            </form>
+                        @else
+                            <button class="checkout-btn" disabled style="background-color: #ccc;">
+                                Cart is empty
+                            </button>
+                        @endif
                     </div>
-                    <div class="summary-row total">
-                        <span>Total:</span>
-                        <span>${{ number_format($total, 2) }}</span>
-                    </div>
-                    <form action="{{ route('cart.checkout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="checkout-btn">Proceed to checkout</button>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

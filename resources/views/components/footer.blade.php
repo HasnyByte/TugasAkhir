@@ -1,4 +1,4 @@
-<footer class="bg-green-700 text-white px-8 py-12">
+<footer class="bg-[#71B53A] text-white px-8 py-12">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
 
         <!-- Kontak Kami -->
@@ -24,9 +24,9 @@
         <div>
             <h3 class="font-bold text-lg mb-4">Layanan</h3>
             <ul class="space-y-2">
-                <li><a href="#" class="hover:underline">Home</a></li>
-                <li><a href="#" class="hover:underline">Shop</a></li>
-                <li><a href="#" class="hover:underline">Contact Us</a></li>
+                <li><a href="{{route('pages.home')}}" class="hover:underline">Home</a></li>
+                <li><a href="{{route('pages.shop')}}" class="hover:underline">Shop</a></li>
+                <li><a href="{{route('pages.contactus')}}" class="hover:underline">Contact Us</a></li>
             </ul>
         </div>
 
