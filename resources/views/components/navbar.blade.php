@@ -49,7 +49,7 @@
                     </p>
                     <button id="logoutConfirmBtn" class="w-full text-left text-red-600 hover:underline">
                         <i class="fas fa-sign-out-alt mr-2"></i>Logout
-                    </button>
+                    </button> 
                 </div>
             </div>
         </div>
@@ -60,15 +60,20 @@
 <div class="mt-20"></div>
 
 <!-- Modal Konfirmasi Logout -->
-<div id="confirmLogoutModal" class="fixed inset-0 flex-4px items-center justify-center bg-gradient-to-b from-black/20 via-black/30 to-black/20 hidden z-50">
+<!-- Modal Konfirmasi Logout -->
+<div id="confirmLogoutModal" class="fixed inset-0 flex items-center justify-center bg-black/50 hidden z-50">
     <div class="bg-white rounded-lg p-6 w-[90%] max-w-sm shadow-xl text-center">
         <p class="text-lg text-gray-800 mb-4">Apakah Anda yakin ingin logout?</p>
         <div class="flex justify-center space-x-4">
+            <a href="{{ route('login') }}" id="logoutConfirmBtn"">
+                {{-- <i class="fas fa-sign-out-alt mr-2"></i>Ya, Logout --}}
             <button id="confirmLogoutYes" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Ya</button>
             <button id="confirmLogoutCancel" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Batal</button>
+            </a>
         </div>
     </div>
 </div>
+
 
 <!-- Script: Toggle popup & konfirmasi logout -->
 <script>

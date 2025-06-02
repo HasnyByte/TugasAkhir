@@ -23,9 +23,11 @@
     }
 
     .table {
-        width: 100%;
+        width: 95%;
         border-collapse: collapse;
         margin-bottom: 1rem;
+        align-content: center;
+        margin-left: 5dvh;
     }
 
     .table thead th {
@@ -224,11 +226,11 @@
                         @endforelse
                     </tbody>
                 </table>
-
+{{-- 
                 <div class="coupon-section">
                     <input type="text" placeholder="Enter code" disabled>
                     <button disabled>Apply Coupon</button>
-                </div>
+                </div> --}}
             </div>
 
             <div class="col-lg-4">
