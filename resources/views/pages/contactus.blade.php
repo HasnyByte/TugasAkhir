@@ -76,7 +76,8 @@
                             </div>
                         @endif
 
-                        {{-- <form method="POST" action="{{ route('contact.submit') }}"> --}}
+{{--                         <form method="POST" action="{{ route('contact.submit') }}">--}}
+                        <form>
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                 <div>
@@ -105,7 +106,7 @@
                                 <textarea id="message" name="message" rows="5" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-grocery-primary" required></textarea>
                             </div>
 
-                            <button type="submit" class="btn-primary w-full md:w-auto px-8 ">Send Message</button>
+                            <button type="submit" class="btn-primary w-full md:w-auto px-8 bg-[#71B53A] rounded-2xl text-white ">Send Message</button>
                         </form>
                     </div>
                 </div>
